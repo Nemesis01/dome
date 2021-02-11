@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       routes: routes,
       title: 'Flutter Demo',
       theme: defaultAppTheme(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

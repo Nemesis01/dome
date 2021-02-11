@@ -1,0 +1,43 @@
+{
+    "coord": {
+        "lon": -72.5491,
+        "lat": 46.3501
+    },
+    "weather": [
+        {
+            "id": 804,
+            "main": "Clouds",
+            "description": "overcast clouds",
+            "icon": "04n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 272.51,
+        "feels_like": 268.99,
+        "temp_min": 272.04,
+        "temp_max": 273.15,
+        "pressure": 1000,
+        "humidity": 100
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.06,
+        "deg": 60
+    },
+    "clouds": {
+        "all": 100
+    },
+    "dt": 1612565846,
+    "sys": {
+        "type": 1,
+        "id": 511,
+        "country": "CA",
+        "sunrise": 1612526881,
+        "sunset": 1612562427
+    },
+    "timezone": -18000,
+    "id": 6169141,
+    "name": "Trois-Rivières",
+    "cod": 200
+}

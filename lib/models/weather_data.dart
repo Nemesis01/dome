@@ -1,3 +1,5 @@
+import 'package:dome/utils/strings.dart';
+
 enum WeatherCondition {
   thunderstorm,
   drizzle,
@@ -18,10 +20,11 @@ class WeatherData {
   //
   final WeatherCondition condition;
   final String description;
-  final double feelLikeTemp;
-  final double temperature;
+  final int temperature;
+  final int feelsLikeTemperature;
   final int cloudiness;
   final DateTime date;
+  final String iconUrl;
 
   //
   //
@@ -30,23 +33,28 @@ class WeatherData {
     this.condition,
     this.description,
     this.temperature,
-    this.feelLikeTemp,
+    this.feelsLikeTemperature,
     this.cloudiness,
     this.date,
+    this.iconUrl,
   });
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
-    var cloudiness = json['clouds'];
+    var cloudiness = json['clouds']['all'];
     var weather = json['weather'][0];
+    //var icon = json['weather']['icon'][0].toString();
 
     return WeatherData(
-      //condition: ,
+      condition: mapToWeatherConditon(weather['main'], cloudiness),
+      description: AppStrings.toTitleCase(weather['description']),
+      temperature: (json['main']['temp'].toDouble()).floor(),
+      feelsLikeTemperature: json['main']['feels_like'].toDouble().floor(),
+      cloudiness: cloudiness,
       date: new DateTime.fromMillisecondsSinceEpoch(
         json['dt'] * 1000,
         isUtc: false,
       ),
-      temperature: json['main']['temp'].toDouble(),
-      // name: json['name'],
+      iconUrl: 'http://openweathermap.org/img/w/' + weather['icon'] + '.png',
     );
   }
 
@@ -93,5 +101,9 @@ class WeatherData {
     }
 
     return condition;
+  }
+
+  static int fahrenheitToCelsius(double fahrenheit) {
+    double x = 2.5;
   }
 }
