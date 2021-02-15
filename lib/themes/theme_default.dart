@@ -13,6 +13,8 @@ ThemeData defaultAppTheme() {
     // Notice that the counter didn't reset back to zero; the application
     // is not restarted.
     primarySwatch: Colors.blue,
+    accentColor: Color.fromARGB(255, 20, 146, 230),
+    //canvasColor: Colors.transparent,
     fontFamily: 'Dosis',
     textTheme: textTheme(),
     // This makes the visual density adapt to the platform that you run

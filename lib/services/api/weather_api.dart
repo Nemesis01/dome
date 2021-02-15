@@ -13,8 +13,8 @@ abstract class WeatherApi {
 
 class OpenWeatherMapApiProvider extends WeatherApi {
   //
-  static const String endPointUrl = AppStrings.OPEN_WEATHER_MAP_API_URL;
-  static const String apiKey = AppStrings.OPEN_WEATHER_MAP_API_KEY;
+  static const String endPointUrl = OPEN_WEATHER_MAP_API_URL;
+  static const String apiKey = OPEN_WEATHER_MAP_API_KEY;
   http.Client httpClient;
 
   /// Class Constructor.
@@ -58,7 +58,6 @@ class OpenWeatherMapApiProvider extends WeatherApi {
       throw Exception(
           'An error occurs when retrieving location for city $city : ${response.statusCode}');
     }
-    print(response.body + 'From repository');
     return WeatherData.fromJson(jsonDecode(response.body));
   }
 }

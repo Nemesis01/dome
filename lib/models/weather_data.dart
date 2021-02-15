@@ -46,7 +46,7 @@ class WeatherData {
 
     return WeatherData(
       condition: mapToWeatherConditon(weather['main'], cloudiness),
-      description: AppStrings.toTitleCase(weather['description']),
+      description: toTitleCase(weather['description']),
       temperature: (json['main']['temp'].toDouble()).floor(),
       feelsLikeTemperature: json['main']['feels_like'].toDouble().floor(),
       cloudiness: cloudiness,

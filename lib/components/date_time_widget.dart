@@ -12,7 +12,6 @@ class DateTimeWidget extends StatelessWidget {
         initialData: DateTime.now().toLocal(),
         stream: bloc.now,
         builder: (context, snapshot) {
-          print('Date is UTC :${DateTime.now().isUtc}');
           var data = snapshot.data;
           return Padding(
             padding: const EdgeInsets.all(8.0),

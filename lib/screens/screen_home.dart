@@ -1,9 +1,13 @@
 import 'package:dome/bloc/bloc_provider.dart';
 import 'package:dome/blocs/bloc_date_time.dart';
+import 'package:dome/blocs/bloc_home.dart';
 import 'package:dome/blocs/bloc_weather.dart';
 import 'package:dome/components/date_time_widget.dart';
 import 'package:dome/components/tile.dart';
 import 'package:dome/components/weather_widget.dart';
+import 'package:dome/views/footer.dart';
+import 'package:dome/views/left_nav.dart';
+import 'package:dome/views/view_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -17,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //
+  // #region Member(s) */
   List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
     StaggeredTile.count(13, 8),
     StaggeredTile.count(8, 4),
@@ -48,19 +52,25 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(),
       onTap: () {},
     ),
-
-    /* Container(color: Colors.grey),
-    Container(color: Colors.grey),
-    Container(color: Colors.grey),
-    Container(color: Colors.grey),*/
   ];
+
+  // #endregion */
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //appBar: AppBar(),
-      body: _body(context),
-      backgroundColor: Colors.blueGrey.shade900,
+    return Row(
+      children: [
+        LeftMenu(
+          onItemTap: onMenuSelected,
+        ),
+        Expanded(
+          child: Scaffold(
+            //appBar: AppBar(),
+            body: _body(context),
+            backgroundColor: Color(0xff20353d),
+          ),
+        ),
+      ],
     );
   }
 
@@ -71,94 +81,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(BuildContext context) {
-    _tiles.insert(
-      0,
-      Tile(
-        //color: Colors.red,
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: BlocProvider<DateTimeBloc>(
-                  blocBuilder: () => DateTimeBloc(),
-                  blocDispose: (DateTimeBloc bloc) => bloc?.dispose(),
-                  child: DateTimeWidget(),
-                ),
-              ),
-              Expanded(
-                child: BlocProvider<WeatherBloc>(
-                  blocBuilder: () => WeatherBloc(),
-                  blocDispose: (WeatherBloc bloc) => bloc?.dispose(),
-                  child: WeatherWidget(),
-                ),
-              ),
-            ],
-          ),
-        ),
-        onTap: () {},
-      ),
-    );
+    var bloc = BlocProvider.of<HomeBloc>(context);
 
-    return Column(
-      children: [
-        _header(context),
-        Expanded(
-          flex: 8,
-          child: _dashBoard(context),
+    return Material(
+      //shadowColor: Colors.white30,
+      elevation: 8.0,
+      //borderRadius: BorderRadius(),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          bottomLeft: Radius.circular(16.0),
         ),
-        Expanded(
-          flex: 2,
-          child: _roomsControl(context),
-        ),
-      ],
-    );
-  }
-
-  Widget _header(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.05,
-      color: Colors.indigo,
-      child: Row(
-        children: [],
       ),
-    );
-  }
-
-  Widget _dashBoard(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 40.0,
-        vertical: 10.0,
-      ),
-      //color: Colors.red,
-      child: Row(
+      color: Colors.white70,
+      child: Column(
         children: [
-          Expanded(flex: 2, child: Container()),
+          // _header(context),
           Expanded(
-              flex: 10,
-              child: Container(
-                //color: Colors.blueGrey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Overview',
-                      style: Theme.of(context).textTheme.headline5.copyWith(
-                          fontFamily: 'Quicksand', color: Colors.white38),
-                    ),
-                    _staggeredGridView(context),
-                  ],
-                ),
-              )),
+            flex: 8,
+            child: MainView(),
+          ),
+          Expanded(
+            flex: 2,
+            child: Footer(
+              children: [],
+            ),
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _roomsControl(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
     );
   }
 
@@ -174,5 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onTileTap() {}
+  void onMenuSelected() {
+    var bloc = BlocProvider.of<HomeBloc>(context);
+    bloc.updateTitle('Title chamged');
+  }
 }
