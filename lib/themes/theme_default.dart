@@ -12,11 +12,22 @@ ThemeData defaultAppTheme() {
     // or simply save your changes to "hot reload" in a Flutter IDE).
     // Notice that the counter didn't reset back to zero; the application
     // is not restarted.
-    primarySwatch: Colors.blue,
-    accentColor: Color.fromARGB(255, 20, 146, 230),
-    //canvasColor: Colors.transparent,
+    brightness: Brightness.light,
+    primarySwatch: Colors.deepPurple,
+    primaryColor: Colors.white,
+    accentColor: Colors.deepPurple,
+    canvasColor: Colors.white,
     fontFamily: 'Dosis',
+
+    buttonTheme: ButtonThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+    ),
     textTheme: textTheme(),
+    pageTransitionsTheme: PageTransitionsTheme(
+        //builders: Map<TargetPlatform, >
+        ),
     // This makes the visual density adapt to the platform that you run
     // the app on. For desktop platforms, the controls will be smaller and
     // closer together (more dense) than on mobile platforms.

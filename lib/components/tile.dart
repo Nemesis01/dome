@@ -1,3 +1,4 @@
+import 'package:dome/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class Tile extends StatelessWidget {
@@ -13,8 +14,8 @@ class Tile extends StatelessWidget {
   Tile({
     @required this.child,
     @required this.onTap,
-    this.backgroundColor,
-    this.elevation = 1.0,
+    this.backgroundColor = Colors.white,
+    this.elevation = 0.0,
   })  : assert(child != null),
         assert(onTap != null);
   // #endregion
@@ -23,12 +24,11 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.blueGrey.shade700.withAlpha(155),
-      //shadowColor: Colors.transparent,
-      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+      borderRadius: BorderRadius.all(Radius.circular(8.0)),
       //type: MaterialType.car,
       elevation: elevation,
       child: InkWell(
+        borderRadius: BorderRadius.all(Radius.circular(8.0)),
         child: Container(
           child: child,
         ),

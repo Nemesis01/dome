@@ -3,7 +3,6 @@ import 'package:dome/blocs/bloc_weather.dart';
 import 'package:dome/models/weather_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:easy_rich_text/easy_rich_text.dart';
 
 class WeatherWidget extends StatelessWidget {
   //
@@ -73,8 +72,6 @@ class WeatherWidget extends StatelessWidget {
       ),
     );
   }
-
-  Widget _placeHolder(BuildContext context) {}
 }
 
 class NewWidget extends StatelessWidget {

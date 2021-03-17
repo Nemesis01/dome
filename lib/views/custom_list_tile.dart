@@ -1,27 +1,32 @@
+import 'package:dome/utils/colors.dart';
+import 'package:dome/utils/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class CustomListTile extends StatelessWidget {
   // #region Member(s)
+  final int index;
   final IconData leading;
   final String title;
   final String subtitle;
   final Widget trailing;
   final Color color;
   final Color selectedColor;
-  bool selected;
-  VoidCallback onTap;
+  final Color backgoundColor;
+  final bool selected;
+  final VoidCallback onTap;
   // #endregion
 
   // #region Constructor
   CustomListTile({
     Key key,
+    this.index,
     this.leading,
     @required this.title,
     this.subtitle,
     this.trailing,
-    this.color = Colors.white70,
+    this.color,
     this.selectedColor = const Color(0xff1492e6),
+    this.backgoundColor,
     this.selected = false,
     this.onTap,
   })  : assert(title != null),
@@ -31,34 +36,48 @@ class CustomListTile extends StatelessWidget {
   // #region Lifecycle Method(s)
   @override
   Widget build(BuildContext context) {
-    //var textTheme = Theme.of(context).textTheme;
-    //leading.color = selected ? selectedColor : color;
-
-    return Row(
-      children: [
-        FittedBox(
-          fit: BoxFit.fill,
-          child: Container(
-            width: 4.0,
-            color: selected ? selectedColor : Colors.transparent,
-            child: Text(''),
+    return Container(
+      padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
+      child: Material(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(100.0),
+          bottomRight: Radius.circular(100.0),
+        ),
+        color: selected
+            ? listTileSelectedColor.withOpacity(0.10)
+            : Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Row(
+            children: [
+              SizedBox(
+                height: 48.0,
+                child: Container(
+                  width: 6.0,
+                  color: selected ? selectedColor : Colors.transparent,
+                  child: Text(''),
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  leading: Icon(
+                    leading ?? Icons.dashboard,
+                    color: selected ? selectedColor : color,
+                  ),
+                  title: Text(
+                    toTitleCase(title),
+                    style: TextStyle(color: selected ? selectedColor : color),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(100.0),
+            bottomRight: Radius.circular(100.0),
           ),
         ),
-        Expanded(
-          child: ListTile(
-            leading: Icon(
-              leading ?? Icons.dashboard,
-              color: selected ? selectedColor : color,
-            ),
-            title: Text(
-              title,
-              style: TextStyle(color: selected ? selectedColor : color),
-            ),
-            //dense: true,
-            onTap: onTap,
-          ),
-        ),
-      ],
+      ),
     );
   }
   // #endregion
