@@ -24,6 +24,14 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Firebase Core Flutter plugins
+  firebase_core: ^0.4.0+9
+  firebase_core_web: ^1.0.1
+  #firebase_analytics: ^5.0.2
+
+  firebase_auth: ^0.14.0+5
+  cloud_firestore: ^0.12.9+5
+
   http: ^0.12.2
   provider:
   intl: ^0.16.1

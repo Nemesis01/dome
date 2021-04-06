@@ -1,19 +1,21 @@
 import 'package:dome/bloc/bloc_provider.dart';
 import 'package:dome/blocs/bloc_home.dart';
-import 'package:dome/views/app_drawer.dart';
+import 'package:dome/models/drawer_menu.dart';
+import 'package:dome/screens/screen_base.dart';
+import 'package:dome/components/app_drawer.dart';
 import 'package:flutter/material.dart';
 
-class AppScaffold extends StatelessWidget {
+class AppScaffold extends StatelessWidget implements BaseScreen {
   // #region Members
-  //final int currentMenuIndex;
+  final int currentMenuIndex;
   final String title;
   final Widget body;
-  final ValueChanged<int> onMenuItemSelected;
+  final ValueChanged<Menu> onMenuItemSelected;
   // #endregion
 
   // #region Constructor
   AppScaffold({
-    // @required this.currentMenuIndex,
+    @required this.currentMenuIndex,
     @required this.title,
     @required this.body,
     @required this.onMenuItemSelected,
@@ -45,14 +47,10 @@ class AppScaffold extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             if (!snapshot.hasData)
               return AppDrawer(
-                titles: bloc.menus,
-                currentIndex: bloc.currentMenuIndex,
-                onMenuItemSelected: onMenuItemSelected,
+                onDrawerItemSelected: onMenuItemSelected,
               );
             return AppDrawer(
-              titles: bloc.menus,
-              currentIndex: snapshot.data,
-              onMenuItemSelected: onMenuItemSelected,
+              onDrawerItemSelected: onMenuItemSelected,
             );
           },
         ),
@@ -84,12 +82,28 @@ class AppScaffold extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
           //var index = snapshot.data;
           return AppDrawer(
-            titles: bloc.menus,
-            currentIndex: snapshot.data,
-            onMenuItemSelected: onMenuItemSelected,
+            onDrawerItemSelected: onMenuItemSelected,
           );
         },
       ),
     );
+  }
+
+  @override
+  Widget mediumScreenLayout(BuildContext context) {
+    // TODO: implement mediumScreenLayout
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget smallScreenLayout(BuildContext context) {
+    // TODO: implement smallScreenLayout
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget wideScreenLayout(BuildContext context) {
+    // TODO: implement wideScreenLayout
+    throw UnimplementedError();
   }
 }

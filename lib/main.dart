@@ -18,10 +18,13 @@ class MyApp extends StatelessWidget {
       blocDispose: (AuthenticationBloc bloc) => bloc?.dispose(),
       child: MaterialApp(
         //routes: routes,
-        initialRoute: RouteNames.authentication,
+        initialRoute: RouteNames.defaultRoute,
         onGenerateRoute: generateRoute,
         title: 'Flutter Demo',
         theme: defaultAppTheme(),
+        darkTheme:
+            ThemeData(accentColor: Colors.purple, brightness: Brightness.dark),
+        themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
       ),
     );

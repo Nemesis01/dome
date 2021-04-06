@@ -2,44 +2,28 @@ import 'package:dome/components/app_scaffold.dart';
 import 'package:dome/models/device.dart';
 import 'package:dome/routes.dart';
 import 'package:dome/screens/screen_base.dart';
+import 'package:dome/utils/strings.dart';
 import 'package:flutter/material.dart';
 
-class DevicesScreen extends StatelessWidget {
-  // #region Members
-  final int currentMenuItem;
-  final String title;
-  final ValueChanged<int> onMenuItemSelected;
-  // #endregion
-
+class DevicesScreen extends StatelessWidget implements BaseScreen {
   // #region Constructor
-  DevicesScreen({
-    this.currentMenuItem,
-    this.onMenuItemSelected,
-    this.title = RouteNames.devices,
-  }) {
-    //BaseScreen(this._title);
-  }
+
   // #endregion
 
   // #region Lifecycle Methods
   @override
   Widget build(BuildContext context) {
-    return AppScaffold(
-      //currentMenuIndex: currentMenuItem,
-      title: title,
-      body: _body(context),
-      onMenuItemSelected: onMenuItemSelected,
+    return Scaffold(
+      appBar:
+          AppBar(title: Text(devicesTitleScreen.toUpperCase()), elevation: 0.0),
+      body: Container(
+          child: Text('Devices Screen',
+              style: Theme.of(context).textTheme.headline4)),
     );
   }
   // #endregion
 
   // #region UI
-  Widget _appBar(BuildContext context) {
-    return AppBar(
-      title: Text(this.title ?? 'Oops!'),
-      elevation: 0.0,
-    );
-  }
 
   Widget _body(BuildContext context) {
     return StreamBuilder<List<Device>>(builder: (context, snapshot) {
@@ -63,6 +47,24 @@ class DevicesScreen extends StatelessWidget {
         ],
       );
     });
+  }
+
+  @override
+  Widget mediumScreenLayout(BuildContext context) {
+    // TODO: implement mediumScreenLayout
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget smallScreenLayout(BuildContext context) {
+    // TODO: implement smallScreenLayout
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget wideScreenLayout(BuildContext context) {
+    // TODO: implement wideScreenLayout
+    throw UnimplementedError();
   }
   // #endregion
 }

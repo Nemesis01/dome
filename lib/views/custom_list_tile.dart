@@ -1,3 +1,4 @@
+import 'package:dome/models/drawer_menu.dart';
 import 'package:dome/utils/colors.dart';
 import 'package:dome/utils/strings.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ class CustomListTile extends StatelessWidget {
   final String subtitle;
   final Widget trailing;
   final Color color;
-  final Color selectedColor;
   final Color backgoundColor;
   final bool selected;
   final VoidCallback onTap;
@@ -25,7 +25,6 @@ class CustomListTile extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.color,
-    this.selectedColor = const Color(0xff1492e6),
     this.backgoundColor,
     this.selected = false,
     this.onTap,
@@ -36,6 +35,8 @@ class CustomListTile extends StatelessWidget {
   // #region Lifecycle Method(s)
   @override
   Widget build(BuildContext context) {
+    Color selectedColor = Theme.of(context).accentColor;
+
     return Container(
       padding: EdgeInsets.fromLTRB(0.0, 0.0, 16.0, 0.0),
       child: Material(
@@ -43,19 +44,20 @@ class CustomListTile extends StatelessWidget {
           topRight: Radius.circular(100.0),
           bottomRight: Radius.circular(100.0),
         ),
-        color: selected
-            ? listTileSelectedColor.withOpacity(0.10)
-            : Colors.transparent,
+        color: selected ? selectedColor.withOpacity(0.10) : Colors.transparent,
         child: InkWell(
           onTap: onTap,
           child: Row(
             children: [
-              SizedBox(
-                height: 48.0,
+              LimitedBox(
                 child: Container(
+                  decoration: BoxDecoration(
+                    color: selected ? selectedColor : Colors.transparent,
+                  ),
                   width: 6.0,
-                  color: selected ? selectedColor : Colors.transparent,
-                  child: Text(''),
+                  height: 56.0,
+
+                  //child: Text(''),
                 ),
               ),
               Expanded(
@@ -66,7 +68,11 @@ class CustomListTile extends StatelessWidget {
                   ),
                   title: Text(
                     toTitleCase(title),
-                    style: TextStyle(color: selected ? selectedColor : color),
+                    style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          color: selected ? selectedColor : color,
+                          fontWeight:
+                              selected ? FontWeight.w500 : FontWeight.w400,
+                        ),
                   ),
                 ),
               ),
@@ -80,5 +86,9 @@ class CustomListTile extends StatelessWidget {
       ),
     );
   }
+
+  /* Widget indicator (BuildContext context){
+    return
+  }*/
   // #endregion
 }

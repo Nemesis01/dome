@@ -4,15 +4,19 @@ import 'package:dome/bloc/authentication/bloc_authentication.dart';
 import 'package:dome/blocs/bloc_devices.dart';
 import 'package:dome/blocs/bloc_home.dart';
 import 'package:dome/screens/screen_add.dart';
-import 'package:dome/screens/screen_authentication.dart';
+import 'package:dome/screens/screen_login.dart';
 import 'package:dome/screens/screen_devices.dart';
 import 'package:dome/screens/screen_home.dart';
+import 'package:dome/screens/screen_registration.dart';
 import 'package:dome/utils/strings.dart';
 import 'package:flutter/material.dart';
+
+import 'blocs/bloc_registration.dart';
 
 class RouteNames {
   static const String authentication = "/authentication";
   static const String register = "/register";
+  static const String login = "/login";
   static const String home = "/home";
   static const String devices = "/devices";
   static const String temperature = "/temperature";
@@ -37,6 +41,8 @@ class RouteNames {
         settings,
         add,
         defaultRoute,
+        login,
+        register,
       ];
 }
 
@@ -60,7 +66,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
           blocBuilder: () => AuthenticationBloc(),
           blocDispose: (AuthenticationBloc bloc) => bloc?.dispose(),
-          child: AuthenticationScreen(),
+          child: LoginScreen(),
+        ),
+      );
+    case RouteNames.register:
+      return MaterialPageRoute(
+        builder: (BuildContext context) => BlocProvider<RegistrationBloc>(
+          blocBuilder: () => RegistrationBloc(),
+          blocDispose: (RegistrationBloc bloc) => bloc?.dispose(),
+          child: RegistrationScreen(),
         ),
       );
     case RouteNames.home:
@@ -76,11 +90,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (BuildContext context) => BlocProvider<DevicesBloc>(
           blocBuilder: () => DevicesBloc(),
           blocDispose: (DevicesBloc bloc) => bloc?.dispose(),
-          child: DevicesScreen(
-            currentMenuItem: 1,
-            onMenuItemSelected: (index) =>
-                BlocProvider.of<HomeBloc>(context).onMenuItemSelected,
-          ),
+          child: DevicesScreen(),
         ),
       );
     case RouteNames.add:

@@ -1,30 +1,25 @@
 import 'package:dome/bloc/bloc_base.dart';
+import 'package:dome/models/drawer_menu.dart';
 import 'package:dome/routes.dart';
 import 'package:dome/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 
 class HomeBloc extends BlocBase with RouteAware {
 // #region Members
   String _mainTitle;
   String _selectedRoute;
-  List<String> _menus = [
-    titleOverview,
-    titleDevices,
-    titleTemperature,
-    titleLights,
-    titleRooms,
-    titleCameras,
-    titleDoors,
-    titleSecurity,
-    titleSettings,
-  ];
+  List<Menu> _menus = Menu.values;
+  Menu _currentMenu;
   int _currentMenuIndex;
   bool _isWideScreen;
 // #endregion
 
   // #region Controllers, RxDart Subjects
   PublishSubject<String> _mainTitleController;
+  PublishSubject<List<Menu>> _drawerMenusController;
+  PublishSubject<Menu> _menuController;
   PublishSubject<List<String>> _menusController;
   PublishSubject<int> _indexController;
   // #endregion
@@ -32,10 +27,14 @@ class HomeBloc extends BlocBase with RouteAware {
   // #region Constructor
   HomeBloc() {
     this._mainTitleController = new PublishSubject<String>();
+    this._drawerMenusController = new PublishSubject<List<Menu>>();
     this._menusController = new PublishSubject<List<String>>();
     this._indexController = new PublishSubject<int>();
+    this._menuController = new PublishSubject<Menu>();
+
+    this._currentMenu = Menu.values[0];
     this._currentMenuIndex = 0;
-    this._mainTitle = _menus[_currentMenuIndex];
+    this._mainTitle = /*_menus[_currentMenuIndex]*/ '';
     this._selectedRoute = RouteNames.home;
 
     this._isWideScreen = true;
@@ -47,42 +46,38 @@ class HomeBloc extends BlocBase with RouteAware {
   // #region Observables, Streams
   Stream<String> get mainTitleStream => this._mainTitleController.stream;
   Stream<List<String>> get menusStream => this._menusController.stream;
+  Stream<List<Menu>> get drawerMenusStream =>
+      this._drawerMenusController.stream;
   Stream<int> get indexStream => this._indexController.stream;
+  Stream<Menu> get menuStream => this._menuController.stream;
 
   String get sectionTitle => this._mainTitle.toUpperCase();
-  List<String> get menus => this._menus;
+  List<Menu> get menus => this._menus;
+  Menu get currentMenu => this._currentMenu;
   int get currentMenuIndex => this._currentMenuIndex;
   bool get isWideScreen => this._isWideScreen;
   // #endregion
 
   // #region Method(s)
-  void onMenuItemSelected(int index) {
-    _updateTitle(_menus[index]);
-    _updateIndex(index);
+  void onMenuItemSelected(Menu menu) {
+    //_updateTitle(describeEnum(_menus[index]));
+    _updateMenu(menu);
+    print('Hello $menu');
   }
 
-  void _updateTitle(String newTitle) {
-    this._mainTitle = newTitle.toUpperCase();
-    this._mainTitleController.sink.add(newTitle.toUpperCase());
-    //print('Menu Item tapped');
+  void _updateMenu(Menu menu) {
+    this._currentMenu = menu;
+    this._menuController.sink.add(menu);
   }
-
-  void _updateIndex(int newIndex) {
-    this._currentMenuIndex = newIndex;
-    this._indexController.sink.add(newIndex);
-
-    print('Updating Index from HomeBloc class');
-    print('new selected index is : $currentMenuIndex');
-  }
-
-  void _updateSelectedRoute() {}
   // #endregion
 
   // #region BlocBase Interface
   @override
   void dispose() {
     _mainTitleController.close();
+    _drawerMenusController.close();
     _menusController.close();
+    _menuController.close();
     _indexController.close();
   }
 
